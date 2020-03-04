@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var sql = require('mssql')
 var bodyParser = require('body-parser');
-var hostname = '10.199.14.46';
+var hostname = 'localhost';
 var port = 8022;
 
 var config = {
