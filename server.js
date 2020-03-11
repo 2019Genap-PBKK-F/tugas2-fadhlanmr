@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 const sql = require('mssql')
-const hostname = 'localhost';
+const hostname = '10.199.14.46';
+// const hostname = 'localhost';
 const port = 8022;
 
-//CORS Middleware
+// CORS Middleware
 app.use(function (req, res, next) {
   //Enabling CORS 
   res.header("Access-Control-Allow-Origin", "*");
@@ -13,10 +14,12 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Body Parser
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
+// DB Config
 const config = {
     user: 'su',
     password: 'SaSa1212',
@@ -24,6 +27,7 @@ const config = {
     database: 'nrp05111740000123'
 };
 
+// Main Function
 var executeQuery = function(res, query, param, reqType) {
   sql.connect(config, function(err){
     if(err) {
@@ -49,19 +53,19 @@ var executeQuery = function(res, query, param, reqType) {
   })
 }
 
-//GET API
+// GET API
 app.get("/",function(req, res)
 {
-  res.end('Help meh');
+  res.end('help meh');
 });
 
 app.get("/api/mahasiswa", function(req, res)
 {
-  var query = "SELECT * FROM mahasiswa";
+  var query = "select * from mahasiswa";
   executeQuery(res, query, null, 0);
 });
 
-//POST API
+// POST API
 app.post("/api/mahasiswa", function(req, res)
 {
   var param = [
@@ -78,8 +82,9 @@ app.post("/api/mahasiswa", function(req, res)
   executeQuery(res, query, param, 1)
 })
 
-//PUT API
-app.put('/api/mahasiswa/:id',function(req,res){
+// UPDATE API
+app.put('/api/mahasiswa/:id',function(req,res)
+{
 
   var param = [
     { name: 'id', sqltype: sql.Int, value: req.body.id }, 
@@ -96,14 +101,14 @@ app.put('/api/mahasiswa/:id',function(req,res){
   executeQuery(res,query, param, 1);
 });
 
-//DELETE API
-app.delete("/api/mahasiswa/:id", function(req, res)
+// DELETE API
+app.delete('/api/mahasiswa/:id', function(req, res)
 {
-  var query = "delete from mahasiswa where id=" + req.params.id;
+  var query = "delete from mahasiswa where id =" + req.params.id;
   executeQuery(res, query, null, 0);
 })
 
 app.listen(port, hostname, function () {
-  var message = "SERVER RUNNING MANTAP: " + port;
+  var message = "Server JALAN BOSS : " + port;
   console.log(message);
 });
