@@ -450,6 +450,28 @@ app.get("/api/log-indikator-satker", function(req, res){
   executeQuery(res, query, null, 0)
 })
 
+// FP GET
+
+app.get("/api/abmas", function(req, res){
+  var query = "select * from abmas"
+  executeQuery(res, query, null, 0)
+})
+
+app.get("/api/dosen", function(req, res){
+  var query = "select * from dosen"
+  executeQuery(res, query, null, 0)
+})
+
+app.get("/api/penelitian", function(req, res){
+  var query = "select * from penelitian"
+  executeQuery(res, query, null, 0)
+})
+
+app.get("/api/publikasi", function(req, res){
+  var query = "select * from publikasi"
+  executeQuery(res, query, null, 0)
+})
+
 app.listen(port, hostname, function () {
   var message = "Server JALAN BOSS : " + port;
   console.log(message);
