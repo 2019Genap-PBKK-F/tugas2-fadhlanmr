@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 const sql = require('mssql')
-//const hostname = '10.199.14.46';
-const hostname = 'localhost';
+const hostname = '10.199.14.46';
+//const hostname = 'localhost';
 const port = 8022;
 
 // CORS Middleware
