@@ -469,7 +469,7 @@ app.get("/api/indikator-satuan-kerja/:id", function(req, res)
 		{ name: 'id_satker', sqltype: sql.UniqueIdentifier, value: req.params.id },
 	]
 	
-	var query = "select a.aspek as Aspek, a.komponen_aspek as Komponen, mi.nama as Indikator, isk.bobot as Bobot, isk.target as Target, isk.capaian as Capaian from indikator_satuankerja as isk, masterindikator as mi, aspek as a where a.id = mi.id_aspek and mi.id = isk.id_master and isk.id_satker = @id_satker"
+	var query = "select row_number() over (order by a.aspek) as num, a.aspek as Aspek, a.komponen_aspek as Komponen, mi.nama as Indikator, isk.bobot as Bobot, isk.target as Target, CONCAT(isk.capaian, ' (', ROUND(COALESCE(capaian/NULLIF(isk.target,0), 0)*100, 2), '%)') AS 'Capaian' from indikator_satuankerja as isk, masterindikator as mi, aspek as a where a.id = mi.id_aspek and mi.id = isk.id_master and isk.id_satker = @id_satker"
 	//var query = "select id_periode as num, id_master as Aspek, id_master as Komponen, id_satker as Indikator, bobot as Bobot, target as Target, capaian as Capaian from indikator_satuankerja where id_satker = @id_satker"
 	//var query = "select * from indikator_satuankerja where id_satker = @id_satker"
 	executeQuery(res, query, model, 1)
